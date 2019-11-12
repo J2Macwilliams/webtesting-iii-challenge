@@ -1,15 +1,56 @@
 
 import React from 'react';
-import { render } from 'react-testing-library';
+import { render, fireEvent } from 'react-testing-library';
+
 
 import Controls from './Controls';
 
-test ('cannot be closed or opened if it is locked', () => {
-const disabledMock = jest.fn();
+describe("Contols the component", () => {
+  const toggleMock = jest.fn();
 
-const { getByText } = render(
-  <Controls disabled={disabledMock} />
-);
+  it("is open and unlocked", () => {
+    const { getByTestId } = render(
+      <Controls locked={false} closed={false} toggle={toggleMock} />
+    );
+
+    const lockBtn = getByTestId("lockButton");
+    expect(lockBtn.textContent).toBe('Lock Gate')
+    expect(lockBtn.disabled).toBe(true)
+
+    const openBtn = getByTestId("openButton");
+    expect(openBtn.textContent).toBe('Close Gate');
+    expect(openBtn.disabled).toBe(false)
+    fireEvent.click(openBtn)
+    expect(openBtn.textContent).toBe('Close Gate')
+  });
+
+  it("is closed and unlocked", () => {
+    const { getByTestId } = render(
+      <Controls locked={false} closed={true} toggle={toggleMock} />
+    );
+
+    const lockBtn = getByTestId("lockButton");
+    expect(lockBtn.textContent).toBe('Lock Gate')
+    expect(lockBtn.disabled).toBe(true)
 
 
+    const openBtn = getByTestId("openButton");
+    expect(openBtn.textContent).toBe("Close Gate");
+    expect(openBtn.disabled).toBe(false)
+  })
+
+  it("is closed and locked", () => {
+    const { getByTestId } = render(
+      <Controls locked={true} closed={true} toggle={toggleMock} />
+    );
+
+    const lockBtn = getByTestId("lockButton");
+    expect(lockBtn.textContent).toBe('Lock Gate')
+    expect(lockBtn.disabled).toBe(true)
+
+
+    const openBtn = getByTestId("openButton");
+    expect(openBtn.textContent).toBe("Close Gate");
+    expect(openBtn.disabled).toBe(false)
+  })
 })
