@@ -1,11 +1,11 @@
 
 import React from 'react';
-import { render, fireEvent } from 'react-testing-library';
+import { render, fireEvent } from '@testing-library/react';
 
 
 import Controls from './Controls';
 
-describe("Contols the component", () => {
+describe("Controls the component", () => {
   const toggleMock = jest.fn();
 
   it("is open and unlocked", () => {
@@ -31,11 +31,11 @@ describe("Contols the component", () => {
 
     const lockBtn = getByTestId("lockButton");
     expect(lockBtn.textContent).toBe('Lock Gate')
-    expect(lockBtn.disabled).toBe(true)
+    expect(lockBtn.disabled).toBe(false)
 
 
     const openBtn = getByTestId("openButton");
-    expect(openBtn.textContent).toBe("Close Gate");
+    expect(openBtn.textContent).toBe("Open Gate");
     expect(openBtn.disabled).toBe(false)
   })
 
@@ -45,12 +45,10 @@ describe("Contols the component", () => {
     );
 
     const lockBtn = getByTestId("lockButton");
-    expect(lockBtn.textContent).toBe('Lock Gate')
-    expect(lockBtn.disabled).toBe(true)
+    expect(lockBtn.disabled).toBe(false)
 
 
     const openBtn = getByTestId("openButton");
-    expect(openBtn.textContent).toBe("Close Gate");
-    expect(openBtn.disabled).toBe(false)
+    expect(openBtn.disabled).toBe(true)
   })
 })
